@@ -1,0 +1,40 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+archivesBaseName = 'lab_5'
+version = ''
+sourceSets.main.java.srcDirs = ['src']
+
+
+repositories {
+    mavenCentral()
+
+}
+
+jar {
+    duplicatesStrategy=DuplicatesStrategy.INCLUDE
+    manifest {
+        attributes "Main-Class": "Main"
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+dependencies {
+    implementation('com.google.code.gson:gson:2.10.1')
+    implementation('org.jetbrains:annotations:23.0.0')
+}
+
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = ["src/main/resources"]
+        }
+    }
+}
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
