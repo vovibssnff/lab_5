@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Лончер, запускающий основной сканер, который считывает команды и аргументы в двух режимах: из файла и в формате обычного ввода через консоль
@@ -16,9 +17,10 @@ import java.util.regex.Pattern;
 public class InputEngine {
     private static final CollectionReceiver receiver = new CollectionReceiver();
     private static final File tmpFile = new File("unsaved.tmp");
-    public static void executeCommand(Command command, String[] args, Scanner scanner) {
+    public static String resp = null;
+    public static void executeCommand(Command command, String arg, Scanner scanner, Mode mode) {
         //Collections.addCommand(command);
-        command.execute(args, scanner);
+        command.execute(arg, scanner, mode);
     }
     public static void init() {
         Collections.addElemToCommandMap(AddCmd.getName(), new AddCmd(receiver));
@@ -40,16 +42,17 @@ public class InputEngine {
         Collections.addElemsFromList(Parser.parse());
         Collections.sortCollection();
         System.out.println(Output_engine.greeting_msg());
-        Scanner sc = new Scanner(System.in);
-        String resp = null;
+        Scanner keyboardScanner = new Scanner(System.in);
+
         Pattern pattern = Pattern.compile("^[yn]$");
         //Восстановление старых данных
         if (tmpFile.exists()&&tmpFile.length()!=0) {
             do {
                 try {
+
                     System.out.println(Output_engine.collectionRestore());
                     System.out.print(Output_engine.prompt());
-                    resp = sc.nextLine().trim();
+                    resp = keyboardScanner.nextLine().trim();
                 } catch (InputMismatchException e) {
                     System.out.println(e.getMessage());
                 }
@@ -58,27 +61,34 @@ public class InputEngine {
                 CollectionLoader.load(tmpFile);
             }
         }
-        launcher(sc, Mode.DEFAULT, null);
+        launcher(keyboardScanner, Mode.DEFAULT, null, null);
     }
-    public static void commandExecute(Scanner scanner, String[] tokens, Command currentCommand, File tmpFile) {
-        String resp = scanner.nextLine().trim();
-        tokens = resp.split(" ");
+    public static void commandExecute(Scanner scanner, String[] tokens, Command currentCommand, File tmpFile, Mode mode) {
+        String input = scanner.nextLine().trim();
+        tokens = input.split(" ");
+//        System.out.println("input: "+input+"tokens: "+ tokens[0]);
+//        if (input.equals("")) {
+//            scanner.nextLine();
+//            input = scanner.nextLine().trim();
+//        }
+        //tokens = (String[]) scanner.useDelimiter(" ").tokens().toArray();
         currentCommand = Collections.searchCommand(tokens[0]);
         Collections.addCommand(currentCommand);
-        if (tokens.length==1) {
-            tokens[0]=null;
-            executeCommand(currentCommand, tokens, scanner);
+        if (tokens.length<2) {
+            executeCommand(currentCommand, null, scanner, mode);
         } else {
-            for (int i=1; i < tokens.length; i++) {
-                tokens[i-1] = tokens[i];
-            }
-            executeCommand(currentCommand, tokens, scanner);
+            executeCommand(currentCommand, tokens[1], scanner, mode);
         }
         CollectionLoader.save(tmpFile);
     }
-    public static void launcher(Scanner sc, Mode mode, String filename) {
+    public static void launcher(Scanner sc, Mode mode, Command currentCommand, String filename) {
         String[] tokens = new String[0];
-        Command currentCommand = null;
+        File file = null;
+        try {
+            file = new File(filename);
+        } catch (NullPointerException e) {
+            System.out.print(Output_engine.prompt());
+        }
         switch (mode) {
 
             //Режим чтения команд с клавиатуры
@@ -88,7 +98,7 @@ public class InputEngine {
                 while (true) {
                     try {
                         System.out.print(Output_engine.prompt());
-                        commandExecute(sc, tokens, currentCommand, tmpFile);
+                        commandExecute(sc, tokens, currentCommand, tmpFile, mode);
                     } catch (NullPointerException e) {
                         System.out.println(Output_engine.incorrectCommand());
                     }
@@ -97,18 +107,31 @@ public class InputEngine {
 
             //Режим чтения команд из скрипта
             case FILE -> {
-                File file = new File(filename);
+
+                Scanner fileScanner = null;
+                try {
+                    fileScanner = new Scanner(file);
+                } catch (FileNotFoundException e) {
+                    e.getStackTrace();
+                }
                 if (!file.exists() || !file.isFile() || !file.canRead()) {
                     System.out.println(Output_engine.accessError());
                     return;
                 }
-                try {
-                    Scanner scanner = new Scanner(file);
-                    while (scanner.hasNextLine()) {
-                        commandExecute(scanner, tokens, currentCommand, tmpFile);
-                    }
-                } catch (FileNotFoundException | NullPointerException e) {
-                    System.out.println(e.getMessage());
+//                try {
+//                    while (true) {
+//                        assert fileScanner != null;
+//                        if (!fileScanner.hasNextLine()) break;
+//                        commandExecute(fileScanner, tokens, currentCommand, tmpFile);
+//                    }
+//                } catch (NullPointerException e) {
+//                    System.out.println(e.getMessage());
+//                    fileScanner.next();
+//                }
+                while (true) {
+                    assert fileScanner != null;
+                    if (!fileScanner.hasNextLine()) break;
+                    commandExecute(fileScanner, tokens, currentCommand, tmpFile, mode);
                 }
             }
         }

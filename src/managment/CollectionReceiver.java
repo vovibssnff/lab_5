@@ -47,8 +47,21 @@ public class CollectionReceiver {
      * @param ID - id, используется в команде update
      * @return elem - новый элемент коллекции
      */
-    private LabWork setElemScript(int type, long ID, Scanner scanner) {
-        Scanner sc = scanner;
+    private LabWork setElemScript(int type, long ID, Scanner sc, Mode mode) {
+//        switch (mode) {
+//            case DEFAULT -> {
+//                Scanner doubleScanner = new Scanner(System.in);
+//                Scanner longScanner = new Scanner(System.in);
+//                Scanner sc = new Scanner(System.in);
+//            }
+//            case FILE -> {
+//                Scanner doubleScanner = new Scanner(file);
+//                Scanner longScanner = new Scanner(System.in);
+//                Scanner sc = new Scanner(System.in);
+//            }
+//        }
+//        if mode.equals(Mode.DEFAULT)
+//        Scanner numeralScanner = new Scanner();
         LabWork elem = new LabWork();
         String name = null;
         Double coordinatesX = null;
@@ -87,6 +100,7 @@ public class CollectionReceiver {
                 System.out.print(Output_engine.prompt());
                 if (sc.hasNextDouble()) {
                     coordinatesX = sc.nextDouble();
+                    sc.nextLine();
                     if (Validator.checkCoordinatesX(coordinatesX)) {
                         break;
                     } else {
@@ -94,7 +108,7 @@ public class CollectionReceiver {
                     }
                 } else {
                     System.out.println(Output_engine.incorrectCoordinatesX());
-                    sc.next();
+                    sc.nextLine();
                 }
             } catch (InputMismatchException e) {
                 System.out.println(e.getMessage());
@@ -107,6 +121,7 @@ public class CollectionReceiver {
                 System.out.print(Output_engine.prompt());
                 if (sc.hasNextLong()) {
                     coordinatesY = sc.nextLong();
+                    sc.nextLine();
                     if (Validator.checkCoordinatesY(coordinatesY)) {
                         break;
                     } else {
@@ -114,7 +129,7 @@ public class CollectionReceiver {
                     }
                 } else {
                     System.out.println(Output_engine.incorrectCoordinatesY());
-                    sc.next();
+                    sc.nextLine();
                 }
             } catch (InputMismatchException e) {
                 System.out.println(e.getMessage());
@@ -131,6 +146,7 @@ public class CollectionReceiver {
                 System.out.print(Output_engine.prompt());
                 if (sc.hasNextDouble()) {
                     minimalPoint = sc.nextDouble();
+                    sc.nextLine();
                     if (Validator.checkMinimalPoint(minimalPoint)) {
                         break;
                     } else {
@@ -138,11 +154,11 @@ public class CollectionReceiver {
                     }
                 } else {
                     System.out.println(Output_engine.incorrectMinimalPoint());
-                    sc.next();
+                    sc.nextLine();
                 }
             } catch (InputMismatchException e) {
                 System.out.println(e.getMessage());
-                sc.next();
+                sc.nextLine();
             }
         } while (true);
         elem.setMinimalPoint(minimalPoint);
@@ -151,7 +167,7 @@ public class CollectionReceiver {
         do {
             try {
                 System.out.print(Output_engine.prompt());
-                difficultyStr = sc.next().trim();
+                difficultyStr = sc.nextLine().trim();
                 difficulty = Difficulty.valueOf(difficultyStr.toUpperCase());
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
@@ -190,6 +206,7 @@ public class CollectionReceiver {
                 System.out.print(Output_engine.prompt());
                 if (sc.hasNextFloat()) {
                     locationX = sc.nextFloat();
+                    sc.nextLine();
                     if (Validator.checkLocationX(locationX)) {
                         break;
                     } else {
@@ -197,11 +214,11 @@ public class CollectionReceiver {
                     }
                 } else {
                     System.out.println(Output_engine.incorrectLocationX());
-                    sc.next();
+                    sc.nextLine();
                 }
             } catch (InputMismatchException e) {
                 System.out.println(e.getMessage());
-                sc.next();
+                sc.nextLine();
             }
         } while (true);
         author.getLocation().setX(locationX);
@@ -212,6 +229,7 @@ public class CollectionReceiver {
                 System.out.print(Output_engine.prompt());
                 if (sc.hasNextDouble()) {
                     locationY = sc.nextDouble();
+                    sc.nextLine();
                     if (Validator.checkLocationY(locationY)) {
                         break;
                     } else {
@@ -219,11 +237,11 @@ public class CollectionReceiver {
                     }
                 } else {
                     System.out.println(Output_engine.incorrectLocationY());
-                    sc.next();
+                    sc.nextLine();
                 }
             } catch (InputMismatchException e) {
                 System.out.println(e.getMessage());
-                sc.next();
+                sc.nextLine();
             }
         } while (true);
         author.getLocation().setY(locationY);
@@ -234,6 +252,7 @@ public class CollectionReceiver {
                 System.out.print(Output_engine.prompt());
                 if (sc.hasNextFloat()) {
                     locationZ = sc.nextFloat();
+                    sc.nextLine();
                     if (Validator.checkLocationZ(locationZ)) {
                         break;
                     } else {
@@ -241,22 +260,22 @@ public class CollectionReceiver {
                     }
                 } else {
                     System.out.println(Output_engine.incorrectLocationZ());
-                    sc.next();
+                    sc.nextLine();
                 }
             } catch (InputMismatchException e) {
                 System.out.println(e.getMessage());
-                sc.next();
+                sc.nextLine();
             }
         } while (true);
         author.getLocation().setZ(locationZ);
         elem.setAuthor(author);
         return elem;
     }
-    public void add_elem(Scanner scanner) {
-        Collections.addElem(setElemScript( 0, 0, scanner), scanner);
+    public void add_elem(Scanner scanner, Mode mode) {
+        Collections.addElem(setElemScript( 0, 0, scanner, mode));
     }
-    public void update(String arg, Scanner scanner) {
-        Collections.update(Collections.searchInCollection(Long.parseLong(arg)), setElemScript(1, Long.parseLong(arg), scanner));
+    public void update(String arg, Scanner scanner, Mode mode) {
+        Collections.update(Collections.searchInCollection(Long.parseLong(arg)), setElemScript(1, Long.parseLong(arg), scanner, mode));
     }
     public void remove_by_id(long id) {
         Collections.removeById(id);
@@ -273,10 +292,11 @@ public class CollectionReceiver {
     }
     public void execute_script(String filename) {
         iterations++;
-        if (iterations>500) {
+        if (iterations>499) {
+            System.out.println(Output_engine.stackOverflowError());
             return;
         }
-        InputEngine.launcher(null, Mode.FILE, filename);
+        InputEngine.launcher(null, Mode.FILE, null, filename);
     }
     public void exit() {
         if (Collections.saveCheck()) {

@@ -1,5 +1,6 @@
 package cmd;
 
+import io.Mode;
 import io.Output_engine;
 import managment.CollectionReceiver;
 
@@ -12,10 +13,10 @@ public class CountLessThanMinimalPointCmd implements Command{
         this.collection_receiver=collection_receiver;
     }
     @Override
-    public void execute(String[] args, Scanner scanner)  {
-        if (args[0]!=null) {
+    public void execute(String arg, Scanner scanner, Mode mode)  {
+        if (arg!=null) {
             try {
-                collection_receiver.count_less_than_minimal_point(Double.parseDouble(args[0]));
+                collection_receiver.count_less_than_minimal_point(Double.parseDouble(arg));
             } catch (RuntimeException e) {
                 System.out.println(Output_engine.incorrectDoubleArg());
             }

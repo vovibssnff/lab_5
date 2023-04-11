@@ -2,6 +2,7 @@ package managment;
 
 import cmd.*;
 import data.*;
+import io.Mode;
 import io.Output_engine;
 
 import java.util.*;
@@ -135,7 +136,7 @@ public class Collections {
      * в коллекцию
      * @param elem - новый объект
      */
-    public static void addElem(LabWork elem, Scanner scanner) {
+    public static void addElem(LabWork elem) {
         collection.add(elem);
         sortCollection();
         System.out.println(Output_engine.successAddElem());

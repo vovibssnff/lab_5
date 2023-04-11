@@ -12,6 +12,7 @@ public class Output_engine {
     public static String importError() {return(messages.getString("importError"));}
     public static String accessError() {return(messages.getString("accessError"));}
     public static String idNotFoundError() {return(messages.getString("idNotFoundError"));}
+    public static String stackOverflowError() {return(messages.getString("stackOverflowError"));}
 
     public static String insertName() {
         return(messages.getString("insertName"));

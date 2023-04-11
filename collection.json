@@ -40,26 +40,5 @@
 				"z": 4.5
 			}
 		}
-	},
-	{
-		"id": 2857850127378042813,
-		"name": "name",
-		"coordinates": {
-			"x": 77.0,
-			"y": 77
-		},
-		"creationDate": "2023-04-04T17:17:04.1010197",
-		"minimalPoint": 66.0,
-		"difficulty": "IMPOSSIBLE",
-		"author": {
-			"name": "authorname",
-			"passportID": "a11200a7-6e06-43dc-974a-0729ce7ddcbd",
-			"eyeColor": "BROWN",
-			"location": {
-				"x": 5.0,
-				"y": 4.0,
-				"z": 3.0
-			}
-		}
 	}
 ]

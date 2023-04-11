@@ -1,5 +1,6 @@
 package cmd;
 
+import io.Mode;
 import io.Output_engine;
 import managment.CollectionReceiver;
 
@@ -12,10 +13,10 @@ public class RemoveLowerCmd implements Command{
         this.collection_receiver=collection_receiver;
     }
     @Override
-    public void execute(String[] args, Scanner scanner) {
-        if (args[0]!=null) {
+    public void execute(String arg, Scanner scanner, Mode mode) {
+        if (arg!=null) {
             try {
-                collection_receiver.remove_lower(Long.parseLong(args[0]));
+                collection_receiver.remove_lower(Long.parseLong(arg));
             } catch (RuntimeException e) {
                 System.out.println(Output_engine.incorrectLongArg());
             }

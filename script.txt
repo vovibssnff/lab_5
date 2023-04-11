@@ -12,4 +12,6 @@ brown
 5
 4
 3
-
+show
+head
+help

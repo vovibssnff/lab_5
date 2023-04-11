@@ -1,5 +1,6 @@
 package managment;
 import cmd.*;
+import io.Mode;
 
 import java.util.Scanner;
 
@@ -44,20 +45,20 @@ public class CollectionInvoker {
         this.print_unique_author=print_unique_author;
         this.print_field_descending_minimal_point=print_field_descending_minimal_point;
     }
-    void cmd_help(String[] args, Scanner scanner) {help.execute(args, scanner);}
-    void cmd_info(String[] args, Scanner scanner) {info.execute(args, scanner);}
-    void cmd_sout_collection(String[] args, Scanner scanner) {sout_collection.execute(args, scanner);}
-    void cmd_add_elem(String[] args, Scanner scanner) {add_elem.execute(args, scanner);}
-    void cmd_update_id(String[] args, Scanner scanner) {update.execute(args, scanner);}
-    void cmd_remove_by_id(String[] args, Scanner scanner) {remove_by_id.execute(args, scanner);}
-    void cmd_clear(String[] args, Scanner scanner) {clear.execute(args, scanner);}
-    void cmd_save(String[] args, Scanner scanner) {save.execute(args, scanner);}
-    void cmd_execute_script(String[] args, Scanner scanner) {execute_script.execute(args, scanner);}
-    void cmd_exit(String[] args, Scanner scanner) {exit.execute(args, scanner);}
-    void cmd_head(String[] args, Scanner scanner) {head.execute(args, scanner);}
-    void cmd_remove_lower(String[] args, Scanner scanner) {remove_lower.execute(args, scanner);}
-    void cmd_history(String[] args, Scanner scanner) {history.execute(args, scanner);}
-    void cmd_count_less_than_minimal_point(String[] args, Scanner scanner) {count_less_than_minimal_point.execute(args, scanner);}
-    void cmd_print_unique_author(String[] args, Scanner scanner) {print_unique_author.execute(args, scanner);}
-    void cmd_print_field_descending_minimal_point(String[] args, Scanner scanner) {print_field_descending_minimal_point.execute(args, scanner);}
+    void cmd_info(String arg, Scanner scanner, Mode mode) {info.execute(arg, scanner, mode);}
+    void cmd_help(String arg, Scanner scanner, Mode mode) {help.execute(arg, scanner, mode);}
+    void cmd_sout_collection(String arg, Scanner scanner, Mode mode) {sout_collection.execute(arg, scanner, mode);}
+    void cmd_add_elem(String arg, Scanner scanner, Mode mode) {add_elem.execute(arg, scanner, mode);}
+    void cmd_update_id(String arg, Scanner scanner, Mode mode) {update.execute(arg, scanner, mode);}
+    void cmd_remove_by_id(String arg, Scanner scanner, Mode mode) {remove_by_id.execute(arg, scanner, mode);}
+    void cmd_clear(String arg, Scanner scanner, Mode mode) {clear.execute(arg, scanner, mode);}
+    void cmd_save(String arg, Scanner scanner, Mode mode) {save.execute(arg, scanner, mode);}
+    void cmd_execute_script(String arg, Scanner scanner, Mode mode) {execute_script.execute(arg, scanner, mode);}
+    void cmd_exit(String arg, Scanner scanner, Mode mode) {exit.execute(arg, scanner, mode);}
+    void cmd_head(String arg, Scanner scanner, Mode mode) {head.execute(arg, scanner, mode);}
+    void cmd_remove_lower(String arg, Scanner scanner, Mode mode) {remove_lower.execute(arg, scanner, mode);}
+    void cmd_history(String arg, Scanner scanner, Mode mode) {history.execute(arg, scanner, mode);}
+    void cmd_count_less_than_minimal_point(String arg, Scanner scanner, Mode mode) {count_less_than_minimal_point.execute(arg, scanner, mode);}
+    void cmd_print_unique_author(String arg, Scanner scanner, Mode mode) {print_unique_author.execute(arg, scanner, mode);}
+    void cmd_print_field_descending_minimal_point(String arg, Scanner scanner, Mode mode) {print_field_descending_minimal_point.execute(arg, scanner, mode);}
 }

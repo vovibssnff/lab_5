@@ -1,11 +1,9 @@
 package data;
 
 import java.io.Serializable;
-import java.util.Objects;
 import java.util.UUID;
 
 public class Person implements Serializable {
-    private static String generator;
     private String name; //Поле не может быть null, Строка не может быть пустой
     private String passportID; //Значение этого поля должно быть уникальным, Строка не может быть пустой, Поле может быть null
     private Color eyeColor; //Поле может быть null

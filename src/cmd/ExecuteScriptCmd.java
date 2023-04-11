@@ -1,5 +1,6 @@
 package cmd;
 
+import io.Mode;
 import managment.CollectionReceiver;
 
 import java.util.Scanner;
@@ -11,6 +12,6 @@ public class ExecuteScriptCmd implements Command{
         this.collection_receiver=collection_receiver;
     }
     @Override
-    public void execute(String[] args, Scanner scanner) {collection_receiver.execute_script(args[0]);}
+    public void execute(String arg, Scanner scanner, Mode mode) {collection_receiver.execute_script(arg);}
     public static String getName() {return "execute_script";}
 }

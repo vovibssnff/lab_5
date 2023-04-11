@@ -1,4 +1,5 @@
 package cmd;
+import io.Mode;
 import managment.*;
 
 import java.util.Scanner;
@@ -8,7 +9,7 @@ public class HelpCmd implements Command {
     public HelpCmd(CollectionReceiver collection_receiver) {
         this.collection_receiver=collection_receiver;
     }
-    public void execute(String[] args, Scanner scanner) {
+    public void execute(String arg, Scanner scanner, Mode mode) {
         collection_receiver.help();
     }
     public static String getName() {return "help";}
