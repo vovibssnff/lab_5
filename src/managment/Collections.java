@@ -17,11 +17,6 @@ public class Collections {
     private static final HashSet<Long> idSet = new HashSet<Long>(); //множество значений id класса LabWork
     private static final HashSet<String> passportIdSet = new HashSet<>(); //множество значений passportId класса Person
     private static ArrayDeque<LabWork> collection = new ArrayDeque<LabWork>(); //основная коллекция объектов LabWork
-    private static ArrayList<Command> commands = new ArrayList<>(); //коллекция команд из скрипта
-
-    public static ArrayList<Command> getCommands() {
-        return commands;
-    }
 
     /**
      * Добавление в журнал истории команд очередной команды
